@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'booktest',
 ]
 
 MIDDLEWARE = [
@@ -76,6 +77,7 @@ WSGI_APPLICATION = 'demo1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
+        # BASE_DIR 指项目根路径
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
