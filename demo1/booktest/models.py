@@ -9,9 +9,25 @@ ORM 对象中的O
 
 
 定义模型：继承models.Model
+配置数据库：默认sqlite
+将应用名添加到应用列表settings.py文件里
 
 python manage.py makemigrations 生成迁移文件
 python manage.py migrate 执行迁移
+
+'''
+
+'''
+python manage.py shell 进入命令：不需要运行项目就可以操作数据库
+
+导入类 from booktest.models import HeroInfo,BookInfo
+查找所有行  表名.objects.all()
+根据主键查找 表名.objects.get(pk=1)
+添加对象 **.save()
+修改对象  **.save()
+删除对象 **delete()
+
+如果存在一对多关系： 一方.多方类名小写_set.all() 可以查询一对多关系
 '''
 
 class BookInfo(models.Model):
