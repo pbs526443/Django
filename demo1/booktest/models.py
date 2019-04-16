@@ -28,11 +28,17 @@ python manage.py shell 进入命令：不需要运行项目就可以操作数据
 删除对象 **delete()
 
 如果存在一对多关系： 一方.多方类名小写_set.all() 可以查询一对多关系
+
+一对多:  一方村子主键   多方存在主键和外键（一方中的主键）
+
+类名.objects.create(列名=值)
 '''
 
 class BookInfo(models.Model):
     btitle = models.CharField(max_length=20)
     bpub_date = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.btitle
 
 class HeroInfo(models.Model):
     hname = models.CharField(max_length=20)
@@ -40,3 +46,5 @@ class HeroInfo(models.Model):
     hcontent = models.CharField(max_length=50)
     # 外键 第一个参数为表名  第二个参数代表删除类型
     hbook = models.ForeignKey('BookInfo',on_delete=models.CASCADE)
+    def __str__(self):
+        return self.hname
