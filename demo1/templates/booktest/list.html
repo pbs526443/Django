@@ -5,6 +5,16 @@
     <title>列表页</title>
 </head>
 <body>
+    <h1>书籍信息</h1>
 
+    <ul>
+        {% for book in booklist %}
+            {#<li><a href="/booktest/details/{{book.id}}/"> {{ book.btitle }} </a> </li>#}
+            <li><a href="{% url 'booktest:details' book.id %}"> {{ book.btitle }} </a> </li>
+        {% empty%}
+            <h3>没有书籍</h3>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'booktest:index' %}">返回首页</a>
 </body>
 </html>

@@ -19,5 +19,13 @@ from django.conf.urls import url,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url('booktest/',include('booktest.urls'))
+    url('booktest/',include('booktest.urls',namespace='booktest'))
 ]
+
+
+'''
+去除硬编码
+1. 给应用添加app_name
+2. 在项目url配置文件中  在include中给应用添加命名空间
+3. 
+'''
