@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>详情页</title>
+    <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
-    <h2>书名:{{Bookdata.btitle}}</h2>
+    <div class="div1">
+        <h2>书名:{{Bookdata.btitle}}</h2>
 
-    <ul>
-        {% for hero in Bookdata.heroinfo_set.all %}
-            <li>{{ hero.hname }}--------{{hero.hcontent}}</li>
-        {% empty %}
-            <h3>没有人物</h3>
-        {% endfor%}
-    </ul>
+        <ul>
+            {% for hero in Bookdata.heroinfo_set.all %}
+                <li>{{ hero.hname }}--------{{hero.hcontent}}</li>
+            {% empty %}
+                <h3>没有人物</h3>
+            {% endfor%}
+        </ul>
 
-    {# <a href="/booktest/list/">返回列表页</a> #}
-    <a href="{% url 'booktest:list' %}">返回列表页</a>
+        {# <a href="/booktest/list/">返回列表页</a> #}
+        <a href="{% url 'booktest:list' %}">返回列表页</a>
+        <a href="{% url 'booktest:heroadd' Bookdata.id %}">添加人物</a>
+    </div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import  HttpResponse
+from django.http import  HttpResponse,HttpResponseRedirect
 from .models import BookInfo,HeroInfo
 from django.template import loader
 # Create your views here.
@@ -35,7 +35,40 @@ def details(request,id):
     result = BookInfo.objects.get(pk=id)
     return render(request,'booktest/detail.html',{"Bookdata":result})
 
+def delete(request,id):
+    try:
+        BookInfo.objects.get(pk=id).delete()
+        result = BookInfo.objects.all()
+        # 使用render没有刷新请求url
+        # return render(request, 'booktest/list.html', {"booklist": result})
+        # 重新向服务器发起请求 刷新url
+        return HttpResponseRedirect('/booktest/list/',{'booklist':result})
+    except Exception as e:
+        return HttpResponse("删除失败")
 
+def heroadd(request,bookid):
+    return render(request,'booktest/heroadd.html',{'bookid':bookid})
+
+def heroinfoadd(request):
+    hname = request.POST['heroname']
+    hsex = request.POST['sex']
+    hcontent = request.POST['herocontent']
+    bookid = request.POST['bookid']
+
+    book  = BookInfo.objects.get(pk=bookid)
+    h1 = HeroInfo()
+    h1.hname = hname
+    h1.hcontent = hcontent
+    if hsex == 0:
+        h1.hgender = False
+    else:
+        h1.hgender = True
+    h1.hbook = book
+    h1.save()
+
+    return render(request, 'booktest/detail.html', {"Bookdata":book})
+    # print(hname,hsex,hcontent,bookid)
+    # return HttpResponse('添加成功')
 '''
 视图函数
 将函数和路由绑定
