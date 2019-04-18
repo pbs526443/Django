@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票页面</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+    <div class="div1">
+        <h1>投票信息汇总</h1>
+        <ol>
+            {% for vote in votes %}
+            <li><a href="{% url 'polls:optionlist' vote.id %}">{{vote.votename}}</a> </li>
+            {% empty %}
+            <li> <h3>没有要投票的列表</h3> </li>
+            {% endfor %}
+        </ol>
+    </div>
+</body>
+</html>

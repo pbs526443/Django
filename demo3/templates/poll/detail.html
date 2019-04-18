@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票选项页面</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+   <div class="div1">
+        <h1>投票信息：{{vot.votename}}</h1>
+        <h3>投票选项</h3>
+        <form action="{% url 'polls:votedetail' %}" method="post">
+            <ul>
+                {% for option in options %}
+                <li><input type="radio" name="option" value="{{option.id}}"> {{option.options}} </li>
+                {% empty%}
+                <h3>该投票没有选项</h3>
+                {% endfor %}
+            </ul>
+            <input type="hidden" name="votid" value="{{vot.id}}">
+            <input type="submit" value="提交">
+        </form>
+   </div>
+</body>
+</html>
