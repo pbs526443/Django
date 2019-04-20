@@ -10,11 +10,16 @@
         <h1>投票信息汇总</h1>
         <ol>
             {% for vote in votes %}
-            <li><a href="{% url 'polls:optionlist' vote.id %}">{{vote.votename}}</a> </li>
+            <li>
+                <a href="{% url 'polls:optionlist' vote.id %}">{{vote.votename}}</a>
+                <a href="{% url 'polls:votdelete' vote.id %}">删除</a>
+                <a href="{% url 'polls:updatevote' vote.id %}">编辑</a>
+            </li>
             {% empty %}
             <li> <h3>没有要投票的列表</h3> </li>
             {% endfor %}
         </ol>
+        <a href="{% url 'polls:addvote' %}">添加投票问题</a>
     </div>
 </body>
 </html>

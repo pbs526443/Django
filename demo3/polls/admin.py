@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import vote,option
+from .models import vote,option,temp,temp2,Host,Application
 # Register your models here.
 
 class Optioninline(admin.StackedInline):
@@ -24,3 +24,7 @@ class OptionAdmin(admin.ModelAdmin):
 
 admin.site.register(vote,VoteAdmin)
 admin.site.register(option,OptionAdmin)
+admin.site.register(temp)
+admin.site.register(temp2)
+admin.site.register(Host)
+admin.site.register(Application)

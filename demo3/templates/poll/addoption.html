@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加投票问题选项</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+    <div class="div1">
+        <h1>投票信息：{{vot.votename}}</h1>
+        <h3>添加投票问题选项</h3>
+        <form action="{% url 'polls:optionadd' %}" method="post">
+            投票问题：<input type="text" name="options">
+            <br>
+            投票数量：<input type="number" name="number">
+            <br>
+            <input type="hidden" value="{{vot.id}}" name="vid">
+            <input type="submit" value="提交">
+        </form>
+        <a href="{% url 'polls:optionlist' vot.id %}">返回投票问题页</a>
+    </div>
+</body>
+</html>

@@ -10,13 +10,13 @@
         <h1>投票信息：{{vot.votename}}</h1>
         <h3>投票选项</h3>
         <ul>
-            {% for option in options %}
+            {% for option in vot.option_set.all %}
             <li> <h4>{{option.options}} 票数：{{option.number}}</h4></li>
             {% empty%}
             <h3>该投票没有选项</h3>
             {% endfor %}
         </ul>
-        <a href="{% url 'polls:list' %}">返回</a>
+        <a href="{% url 'polls:optionlist' vot.id %}">返回投票问题页</a>
     </div>
 </body>
 </html>

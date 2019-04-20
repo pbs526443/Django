@@ -12,7 +12,11 @@
         <form action="{% url 'polls:votedetail' %}" method="post">
             <ul>
                 {% for option in options %}
-                <li><input type="radio" name="option" value="{{option.id}}"> {{option.options}} </li>
+                <li>
+                    <input type="radio" name="option" value="{{option.id}}"> {{option.options}}
+                    <a href="{% url 'polls:deleteoption' option.id %}">删除</a>
+                    <a href="{% url 'polls:updateoption' option.id %}">编辑</a>
+                </li>
                 {% empty%}
                 <h3>该投票没有选项</h3>
                 {% endfor %}
@@ -20,6 +24,8 @@
             <input type="hidden" name="votid" value="{{vot.id}}">
             <input type="submit" value="提交">
         </form>
+        <a href="{% url 'polls:addoption' vot.id %}">添加选项</a>
+        <a href="{% url 'polls:list' %}">返回列表页</a>
    </div>
 </body>
 </html>

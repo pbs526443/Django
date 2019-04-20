@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑问题</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+    <div class="div1">
+        <h1>编辑投票问题页面</h1>
+        <form action="{% url 'polls:optionupdate' %}" method="post">
+            投票名：<input type="text" name="optionname" value="{{result.options}}">
+            <br>
+            投票数：<input type="number" name="number" value="{{result.number}}">
+            <br>
+            <input type="hidden" value="{{result.id}}" name="oid">
+            <input type="submit" value="提交">
+        </form>
+        <a href="{% url 'polls:optionlist' vot.id %}">返回投票问题页</a>
+    </div>
+</body>
+</html>
