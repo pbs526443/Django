@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑图书</title>
+</head>
+<body>
+    <div class="div1">
+        <h1>编辑图书</h1>
+        <form action="{% url 'booktest:updatebook' %}" method="post">
+            图书名：<input type="text" placeholder="{{book.btitle}}" name="bookname">
+            <input type="hidden" value="{{book.id}}" name="bookid">
+            <input type="submit" value="提交">
+        </form>
+        <a href="{% url 'booktest:list' %}">返回列表页</a>
+    </div>
+</body>
+</html>

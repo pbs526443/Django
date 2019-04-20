@@ -14,12 +14,14 @@
                 {#<li><a href="/booktest/details/{{book.id}}/"> {{ book.btitle }} </a> </li>#}
                 <li><a href="{% url 'booktest:details' book.id %}"> {{ book.btitle }} </a> 
                     <a href="{% url 'booktest:delete' book.id %}">删除</a>
+                    <a href="{% url 'booktest:bookupdate' book.id %}">编辑</a>
                 </li>
             {% empty%}
                 <h3>没有书籍</h3>
             {% endfor %}
         </ul>
             <a href="{% url 'booktest:index' %}">返回首页</a>
+            <a href="{% url 'booktest:bookadd' %}">添加图书</a>
              <!--<a href="/booktest/addbook.html">添加</a>-->
     </div>
 </body>

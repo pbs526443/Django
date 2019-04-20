@@ -22,6 +22,28 @@ def list(request):
     result = BookInfo.objects.all()
     return render(request,'booktest/list.html',{"booklist":result})
 
+def bookadd(request):
+    return render(request,'booktest/bookadd.html')
+
+def addbook(request):
+    btitle = request.POST['bookname']
+    b1 = BookInfo()
+    b1.btitle = btitle
+    b1.save()
+    return HttpResponseRedirect('/booktest/list/')
+
+def bookupdate(request,bid):
+    result = BookInfo.objects.get(pk=bid)
+    return render(request,'booktest/bookupdate.html',{"book":result})
+
+def updatebook(request):
+    bookid = request.POST['bookid']
+    btitle = request.POST['bookname']
+    b1 = BookInfo.objects.get(pk=bookid)
+    b1.btitle = btitle
+    b1.save()
+    return HttpResponseRedirect('/booktest/list/')
+
 def detail(request,id,age):
     # return HttpResponse('标签页'+'  '+str(id)+'  '+str(age))
     return render(request,'booktest/list.html')
@@ -66,9 +88,46 @@ def heroinfoadd(request):
     h1.hbook = book
     h1.save()
 
-    return render(request, 'booktest/detail.html', {"Bookdata":book})
+    # return render(request, 'booktest/detail.html', {"Bookdata":book})
+    return HttpResponseRedirect('/booktest/details/'+str(bookid)+'/',{"Bookdata":book})
     # print(hname,hsex,hcontent,bookid)
     # return HttpResponse('添加成功')
+
+def herodelete(request,hid):
+    hero = HeroInfo.objects.get(pk=hid)
+    bookid = hero.hbook
+    # print(bookid)
+    HeroInfo.objects.get(pk=hid).delete()
+    book = BookInfo.objects.get(btitle=bookid)
+    bookid = book.id
+    # return HttpResponse(bookid)
+    return HttpResponseRedirect('/booktest/details/' + str(bookid) + '/')
+
+def heroupdate(request,hid):
+    result = HeroInfo.objects.get(pk=hid)
+
+    return render(request,'booktest/heroupdate.html',{"hero":result})
+
+def addheroinfo(request):
+    hname = request.POST['heroname']
+    hgender = request.POST['sex']
+    hcontent = request.POST['herocontent']
+    hbook = request.POST['hbook']
+    hid = request.POST['heroid']
+
+    h1 = HeroInfo.objects.get(pk=hid)
+    h1.hname = hname
+    h1.hgender = hgender
+    h1.hcontent = hcontent
+    book = BookInfo.objects.get(btitle=hbook)
+    h1.hbook = book
+    h1.save()
+    return HttpResponseRedirect('/booktest/details/' + str(book.id) + '/')
+
+
+
+
+
 '''
 视图函数
 将函数和路由绑定
