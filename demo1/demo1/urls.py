@@ -20,6 +20,7 @@ from django.conf.urls import url,include
 urlpatterns = [
     path('admin/', admin.site.urls),
     url('booktest/',include('booktest.urls',namespace='booktest'))
+    # url(r'^',include('cookiesessiontest.urls',namespace='cookiesessiontest'))
 ]
 
 

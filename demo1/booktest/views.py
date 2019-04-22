@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_list_or_404,get_object_or_404
+from django.shortcuts import redirect,reverse
 from django.http import  HttpResponse,HttpResponseRedirect
 from .models import BookInfo,HeroInfo
-from django.template import loader
+from datetime import timedelta
+from django.template import loader,RequestContext
 # Create your views here.
 
 # 定义视图函数
@@ -14,12 +16,26 @@ def index(request):
     # result = indextem.render(cont)
     # # 返回模板
     # return HttpResponse(result)
-    return render(request,'booktest/index.html',{"username":"pbs"})
+
+    # t1 =loader.get_template('booktest/index.html')
+    # context = {'username':'asdadasdasdas'}
+    # return HttpResponse(t1.render(context))
+
+    # response = HttpResponse()
+    # print(dir(request.COOKIES))
+    # if 'h1' in request.COOKIES.keys():
+    #     response.write('<h1>'+ request.COOKIES['h1'] + '</h1>')
+    # response.set_cookie('h1','zzy')
+    # return response
+    # return HttpResponseRedirect(reverse('booktest:index'))
+    return render(request,'booktest/index.html',{"username":request.session.get('username')})
 
 
 def list(request):
     # return HttpResponse('列表页')
     result = BookInfo.objects.all()
+    # 查询列表报错,会调用404页面
+    # result = get_list_or_404(BookInfo,pk=30)
     return render(request,'booktest/list.html',{"booklist":result})
 
 def bookadd(request):
@@ -30,10 +46,14 @@ def addbook(request):
     b1 = BookInfo()
     b1.btitle = btitle
     b1.save()
-    return HttpResponseRedirect('/booktest/list/')
+    # return HttpResponseRedirect('/booktest/list/')
+    return HttpResponseRedirect(reverse('booktest:list'))
 
 def bookupdate(request,bid):
     result = BookInfo.objects.get(pk=bid)
+    # 查询BookInfo 的id,报错会调用404
+    # result = get_object_or_404(BookInfo,pk=20)
+
     return render(request,'booktest/bookupdate.html',{"book":result})
 
 def updatebook(request):
@@ -42,7 +62,8 @@ def updatebook(request):
     b1 = BookInfo.objects.get(pk=bookid)
     b1.btitle = btitle
     b1.save()
-    return HttpResponseRedirect('/booktest/list/')
+    # return HttpResponseRedirect('/booktest/list/')
+    return HttpResponseRedirect(reverse('booktest:list'))
 
 def detail(request,id,age):
     # return HttpResponse('标签页'+'  '+str(id)+'  '+str(age))
@@ -64,7 +85,8 @@ def delete(request,id):
         # 使用render没有刷新请求url
         # return render(request, 'booktest/list.html', {"booklist": result})
         # 重新向服务器发起请求 刷新url
-        return HttpResponseRedirect('/booktest/list/',{'booklist':result})
+        # return HttpResponseRedirect('/booktest/list/',{'booklist':result})
+        return HttpResponseRedirect(reverse('booktest:list'),{'booklist':result})
     except Exception as e:
         return HttpResponse("删除失败")
 
@@ -89,19 +111,22 @@ def heroinfoadd(request):
     h1.save()
 
     # return render(request, 'booktest/detail.html', {"Bookdata":book})
-    return HttpResponseRedirect('/booktest/details/'+str(bookid)+'/',{"Bookdata":book})
+    # return HttpResponseRedirect('/booktest/details/'+str(bookid)+'/',{"Bookdata":book})
+    return HttpResponseRedirect(reverse('booktest:details',args=str(bookid)),{"Bookdata":book})
     # print(hname,hsex,hcontent,bookid)
     # return HttpResponse('添加成功')
 
 def herodelete(request,hid):
     hero = HeroInfo.objects.get(pk=hid)
-    bookid = hero.hbook
-    # print(bookid)
-    HeroInfo.objects.get(pk=hid).delete()
-    book = BookInfo.objects.get(btitle=bookid)
-    bookid = book.id
+    bookid = hero.hbook.id
+    # print(bookid.id,"---------------------------")
     # return HttpResponse(bookid)
-    return HttpResponseRedirect('/booktest/details/' + str(bookid) + '/')
+    HeroInfo.objects.get(pk=hid).delete()
+    # book = BookInfo.objects.get(btitle=bookid)
+    # bookid = book.id
+    # return HttpResponse(bookid)
+    # return HttpResponseRedirect('/booktest/details/' + str(bookid) + '/')
+    return HttpResponseRedirect(reverse('booktest:details',args=str(bookid)))
 
 def heroupdate(request,hid):
     result = HeroInfo.objects.get(pk=hid)
@@ -122,10 +147,28 @@ def addheroinfo(request):
     book = BookInfo.objects.get(btitle=hbook)
     h1.hbook = book
     h1.save()
-    return HttpResponseRedirect('/booktest/details/' + str(book.id) + '/')
+    # return HttpResponseRedirect('/booktest/details/' + str(book.id) + '/')
+    # return HttpResponseRedirect(reverse('booktest:details', args=book.id),)
+    return HttpResponseRedirect(reverse('booktest:details',args=str(book.id)))
 
 
+def login(request):
+    if request.method == "GET":
+        return render(request,'booktest/login.html')
+    elif request.method == "POST":
+        username = request.POST['username']
+        request.session["username"] = username
+        # request.session.set_expiry(timedelta(days=5))
+        return redirect(reverse('booktest:index'))
 
+def logout(request):
+    request.session.clear()
+    return redirect(reverse('booktest:index'))
+
+from .models import AreaInfo
+def area(request):
+    area = AreaInfo.objects.get(atitle='郑州')
+    return render(request,'booktest/area.html',{'area':area})
 
 
 '''

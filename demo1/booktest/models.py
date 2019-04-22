@@ -34,6 +34,13 @@ python manage.py shell 进入命令：不需要运行项目就可以操作数据
 类名.objects.create(列名=值)
 '''
 
+class AreaInfo(models.Model):
+    atitle = models.CharField(max_length=20)
+    aParent = models.ForeignKey('self',null=True,blank=True,on_delete=models.CASCADE)
+    def __str__(self):
+        return self.atitle
+
+
 class BookInfo(models.Model):
     btitle = models.CharField(max_length=20)
     bpub_date = models.DateTimeField(auto_now_add=True)

@@ -21,4 +21,7 @@ urlpatterns = [
     url(r'^herodelete/(\d+)/$',views.herodelete,name='herodelete'),
     url(r'^heroupdate/(\d+)/$',views.heroupdate,name='heroupdate'),
     url(r'^addheroinfo/$',views.addheroinfo,name='addheroinfo'),
+    url(r'^area/$',views.area,name='area'),
+    url(r'^login/$',views.login,name='login'),
+    url(r'^logout/$',views.logout,name='logout'),
 ]

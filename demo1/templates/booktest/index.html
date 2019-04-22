@@ -13,8 +13,10 @@
         <img src="{% static '/img/314249.jpg' %}" alt="加载失败" width="1100px">
         {% if username %}
             <h2>{{ username }}</h2>
+            <a href="{% url 'booktest:logout' %}"> 退出登录</a>
         {% else %}
             <h2>没有登录</h2>
+            <a href="{% url 'booktest:login' %}">点击登录</a>
         {% endif%}
 
         {# <a href="/booktest/list/">列表页</a> #}
