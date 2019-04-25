@@ -5,5 +5,5 @@ from .models import *
 
 admin.site.register(cation)
 admin.site.register(tag)
-admin.site.register(comment)
+# admin.site.register(comment)
 admin.site.register(article)

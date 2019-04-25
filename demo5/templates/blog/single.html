@@ -14,38 +14,38 @@
             </div>
         </header>
         <div class="entry-content clearfix">
-           {{artis.text}}
+           {{artis.text|safe}}
         </div>
     </article>
     <section class="comment-area" id="comment-area">
         <hr>
         <h3>发表评论</h3>
-        <form action="{% url 'blog:addcomm' %}" method="post" class="comment-form">
+        <form action="{% url 'comment:commitcomment' artis.id %}" method="post" class="comment-form">
             <div class="row">
                 <div class="col-md-4">
-                    <label for="id_name">名字：</label>
-                    <input type="text" id="id_name" name="name" required>
+                    <label for="form.username.id_for_label">名字：</label>
+                    {{form.username}}
                 </div>
                 <div class="col-md-4">
-                    <label for="id_email">邮箱：</label>
-                    <input type="email" id="id_email" name="email" required>
+                    <label for="form.email.id_for_label">邮箱：</label>
+                    {{form.email}}
                 </div>
                 <div class="col-md-4">
-                    <label for="id_url">网址：</label>
-                    <input type="text" id="id_url" name="url">
+                    <label for="form.website.id_for_label">网址：</label>
+                    {{form.website}}
                 </div>
                 <div class="col-md-12">
-                    <label for="id_comment">评论：</label>
-                    <textarea name="comment" id="id_comment" required></textarea>
+                    <label for="form.content.id_for_label">评论：</label>
+                    {{form.content}}
                     <input type="hidden" value="{{artis.id}}" name="aid">
                     <button type="submit" class="comment-btn">发表</button>
                 </div>
             </div>    <!-- row -->
         </form>
         <div class="comment-list-panel">
-            <h3>评论列表，共 <span>{{artis.comment_set.all|length}}</span> 条评论</h3>
+            <h3>评论列表，共 <span>{{artis.comments_set.all|length}}</span> 条评论</h3>
             <ul class="comment-list list-unstyled">
-                {% for comm in artis.comment_set.all %}
+                {% for comm in artis.comments_set.all %}
                 <li class="comment-item">
                     <span class="nickname">{{comm.username}}</span>
                     <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">{{comm.contenttime}}</time>
@@ -61,25 +61,9 @@
     </section>
 {% endblock %}
 
-{% block top %}
+{% block toc %}
     <div class="widget widget-content">
         <h3 class="widget-title">文章目录</h3>
-        <ul>
-            <li>
-                <a href="#">教程特点</a>
-            </li>
-            <li>
-                <a href="#">谁适合这个教程</a>
-            </li>
-            <li>
-                <a href="#">在线预览</a>
-            </li>
-            <li>
-                <a href="#">资源列表</a>
-            </li>
-            <li>
-                <a href="#">获取帮助</a>
-            </li>
-        </ul>
+        {{artis.toc|safe}}
     </div>
 {% endblock %}
