@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传图片</title>
+</head>
+<body>
+    <h2>上传图片</h2>
+    <form action="{% url 'booktest:upload' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        图片名：<input type="text" name="name">
+        <br>
+        排序编号：<input type="text" name="index">
+        <br>
+        选择图片：<input type="file" name="pic">
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>

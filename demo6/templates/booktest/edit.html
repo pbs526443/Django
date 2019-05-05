@@ -1,0 +1,26 @@
+{% extends 'booktest/layout.html' %}
+{% block title %}
+文本编辑
+{% endblock %}
+{% block linkcss %}
+<script src="/static/tiny_mce/tiny_mce.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    tinyMCE.init({
+        'mode':'textareas',
+        'theme':'advanced',
+        'width':680,
+        'height':400
+    })
+</script>
+{% endblock %}
+{% block body %}
+<form action="{% url 'booktest:edit' %}" method="post">
+    {% csrf_token %}
+    标题: <input type="text" name="mname">
+    <br>
+    文章: <textarea name="hcontent"></textarea>
+    <br>
+    <input type="submit" value="提交">
+</form>
+
+{% endblock %}

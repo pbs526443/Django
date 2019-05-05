@@ -19,4 +19,13 @@ urlpatterns = [
     url(r'^reader_histroy/(\d+)/$',views.reader_histroy,name='reader_histroy'),
     url(r'^manager/(\d+)/$',views.manager,name='manager'),
     url(r'^manager_login/$',views.manager_login,name='manager_login'),
+    url(r'^upload/$',views.upload,name='upload'),
+    url(r'^edit/$',views.edit,name='edit'),
+    url(r'^mail/$',views.mail,name='mail'),
+    url(r'^active/(.*?)/$',views.active,name='active'),
+    url(r'^ajax/$',views.ajax,name='ajax'),
+    url(r'^ajaxa/$',views.ajaxa,name='ajaxa'),
+    url(r'^ajaxlogin/$',views.ajaxlogin,name='ajaxlogin'),
+    url(r'^checkuser/$',views.checkuser,name='checkuser'),
+    url(r'^verifycode/$',views.verifycode,name='verifycode'),
 ]

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from tinymce.models import HTMLField
 
 # Create your models here.
 
@@ -24,3 +25,15 @@ class Histroys(models.Model):
     date_return = models.DateTimeField()
     status = models.CharField(max_length=20,default='not return')
 
+class Hostpic(models.Model):
+    name = models.CharField(max_length=20)
+    pic = models.ImageField(upload_to='hostpic')
+    index = models.SmallIntegerField()
+    def __str__(self):
+        return self.name
+
+class MessageInfo(models.Model):
+    mname = models.CharField(max_length=20)
+    hcontent = HTMLField()
+    def __str__(self):
+        return self.mname

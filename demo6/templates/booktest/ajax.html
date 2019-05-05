@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajax</title>
+    <script src="/static/js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        $(function () {
+            $("#load").click(function () {
+                console.log('标签加载完毕');
+                $.ajax({
+                    url:'/booktest/ajaxa/',
+                    type:'post',
+                    data:{"csrfmiddlewaretoken": $("input[name=csrfmiddlewaretoken]").val()},
+                    success:function (data) {
+                        console.log(data);
+                    }
+                })
+            })
+        })
+
+    </script>
+</head>
+<body>
+    {% csrf_token %}
+    <button id="load">点击load内容</button>
+    <div id="info"></div>
+    <div id="info2"></div>
+</body>
+</html>

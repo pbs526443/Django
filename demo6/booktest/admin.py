@@ -5,3 +5,5 @@ from .models import *
 admin.site.register(Users)
 admin.site.register(Books)
 admin.site.register(Histroys)
+admin.site.register(Hostpic)
+admin.site.register(MessageInfo)
